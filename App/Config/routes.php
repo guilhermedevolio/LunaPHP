@@ -5,8 +5,7 @@ use Gui\Mvc\Core\Router;
 
 $router = new Router();
 
-$router->get('home', [HomeController::class, 'index']);
-$router->get('teste/{nome}', [HomeController::class, 'teste']);
+$router->get('home/', [HomeController::class, 'index']);
 
 $router->dispatch();
 

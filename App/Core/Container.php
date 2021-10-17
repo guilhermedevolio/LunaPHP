@@ -29,7 +29,7 @@ class Container
             }
         } else {
             if (!isset($middlewares[$middleware])) {
-                throw new MiddlewareException();
+                throw new MiddlewareException("Middleware $middleware not found");
             }
 
             new $middlewares[$middleware];

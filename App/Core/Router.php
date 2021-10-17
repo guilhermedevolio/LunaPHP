@@ -3,12 +3,14 @@
 namespace Gui\Mvc\Core;
 
 use Gui\Mvc\Core\Http\Http;
+use Gui\Mvc\Exceptions\MiddlewareException;
 
 class Router extends Http
 {
     private $url;
     private array $routes;
     private array $params = [];
+    private $group = null;
 
     public function __construct()
     {
@@ -18,6 +20,15 @@ class Router extends Http
     public function getParsedUrl()
     {
         return explode('/', $this->url);
+    }
+
+    public function group(string $group): string
+    {
+        if (substr($group, -1) != "/") {
+            $group .= "/";
+        }
+
+        return $this->group = $group;
     }
 
     public function get($url, $controller, $middleware = null)
@@ -42,18 +53,20 @@ class Router extends Http
 
     private function loadMiddlewares($middlewares)
     {
-        if (isset($middleware) && $middleware != null) {
-            Container::middleware($middleware);
+        try {
+            Container::middleware($middlewares);
+        } catch (MiddlewareException $exception) {
+            exit($exception->getMessage());
         }
     }
 
     private function getParsedClassData(array $data): array
     {
+        $payload['url'] = $data['route'][0];
         $payload['controller'] = new $data['route'][1][0];
         $payload['method'] = $data['route'][1][1] ?? 'index';
         $payload['middlewares'] = $data['route'][2];
         $payload['params'] = $data['params'];
-
         return $payload;
     }
 
@@ -72,15 +85,26 @@ class Router extends Http
         $routeArray = explode('/', $route[0]);
         $params = [];
 
+
         for ($i = 0; $i < count($routeArray); $i++) {
             if ((strpos($routeArray[$i], '{') !== false) && (count($routeArray) == count($urlArray))) {
                 $routeArray[$i] = $urlArray[$i];
                 $params[] = $routeArray[$i];
             }
+
             $route[0] = implode('/', $routeArray);
+
+            if ($this->group) {
+                $route[0] = $this->group . $route[0];
+            }
+
+            if (substr($route[0], -1) == "/") {
+                $route[0] = rtrim($route[0], '/');
+            }
+
         }
 
-        return ['route' => $route, 'params' => $params];
+        return $this->getParsedClassData(['route' => $route, 'params' => $params]);
     }
 
 
@@ -89,12 +113,10 @@ class Router extends Http
         $routes = $this->routes[$this->request()->method()];
 
         foreach ($routes as $route) {
-            $route_mounted = $this->mountedRoute($route);
+            $object = $this->mountedRoute($route);
 
-            $object = $this->getParsedClassData($route_mounted);
-
-            if ($this->validateRoute($route_mounted['route'][0])) {
-                return $this->run($object['controller'], $object['method'], $object['params']);
+            if ($this->validateRoute($object['url'])) {
+                return $this->run($object['controller'], $object['method'], $object['middlewares'], $object['params']);
             }
         }
 
@@ -102,10 +124,14 @@ class Router extends Http
         die('Página não encontrada');
     }
 
-    private function run($controller, $method, $params)
+    private function run($controller, $method, $middlewares, $params)
     {
         if (Container::isClosure($method)) {
             return $method();
+        }
+
+        if (!empty($middlewares)) {
+            $this->loadMiddlewares($middlewares);
         }
 
         call_user_func_array([$controller, $method], $params);
