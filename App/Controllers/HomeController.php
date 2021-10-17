@@ -2,13 +2,17 @@
 
 namespace Gui\Mvc\Controllers;
 
+use Gui\Mvc\Core\Config;
 use Gui\Mvc\Core\Controller;
+use Gui\Mvc\Enums\HttpStatusEnum;
 use Gui\Mvc\Helpers\Validator;
 
 class HomeController extends Controller
 {
     public function Index()
     {
+        return response()->status(HttpStatusEnum::UNAUTHORIZED)->json(['status' => 1, 'msg' => 'OI']);
+
         $request = $this->request()->get()->all();
 
         $validator = (new Validator())->make($request, [

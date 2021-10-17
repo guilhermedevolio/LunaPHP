@@ -1,3 +1,5 @@
 <?php
-define('APP_MODE', 'development');;
-define('APP_NAME', 'GDMVC');
+
+use Gui\Mvc\Core\Config;
+
+Config::set('APP_MODE', 'development');
