@@ -46,9 +46,7 @@ class Router extends Http
         $urlArray = $this->getParsedUrl();
 
         foreach ($routes as $route) {
-            if (Container::isClosure($route[1])) {
-                return $route[1]();
-            }
+
 
             $routeArray = explode('/', $route[0]);
 
@@ -61,6 +59,10 @@ class Router extends Http
             }
 
             if ($this->url === $route[0]) {
+                if (Container::isClosure($route[1])) {
+                    return $route[1]();
+                }
+
                 $controller = explode('@', $route[1])[0];
                 $method = explode('@', $route[1])[1];
                 $middleware = $route[2] ?? null;
