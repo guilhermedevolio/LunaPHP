@@ -13,6 +13,7 @@ class HomeController extends Controller
 
         $validator = (new Validator())->make($request, [
             'email' => 'required/email/int',
+            'idade' => 'int'
         ]);
 
         if($validator->errors()) {

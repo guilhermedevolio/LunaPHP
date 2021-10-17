@@ -23,26 +23,22 @@ class Validator
 
     public function make(array $data, array $rules)
     {
-        foreach ($data as $key => $value) {
+        foreach ($rules as $key => $rule) {
+            $exploded_rule = $this->getParsedRules($rule);
 
-            if (isset($rules[$key])) {
-                $rules_ = $this->getValidations($rules[$key]);
-                foreach ($rules_ as $rule) {
-                    $call_validate = $this->call($rule, $value);
+            foreach ($exploded_rule as $rule_) {
 
-                    if ($rule == "required") {
+                if ($rule_ == "required" && (!isset($data[$key]) || empty($data[$key]))) {
+                    $this->errors[$key][] = $this->validation_messages[$rule_]['error_message'];
+                } else {
+                    if(!empty($data[$key])) {
+                        $call_validate = $this->call($rule_, $data[$key]);
                         if (!$call_validate) {
-                            $this->errors[$key][] = $this->validation_messages[$rule]['error_message'];
-                            break;
+                            $this->errors[$key][] = $this->validation_messages[$rule_]['error_message'];
                         }
-                    }
-
-                    if (!$call_validate) {
-                        $this->errors[$key][] = $this->validation_messages[$rule]['error_message'];
                     }
                 }
             }
-
         }
 
         return $this;
@@ -57,7 +53,7 @@ class Validator
         }
     }
 
-    public function getValidations(string $rules)
+    public function getParsedRules(string $rules)
     {
         $newRules = array();
 

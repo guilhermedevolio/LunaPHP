@@ -98,9 +98,12 @@ class Router extends Http
                 $route[0] = $this->group . $route[0];
             }
 
-            if (substr($route[0], -1) == "/") {
-                $route[0] = rtrim($route[0], '/');
+            if(strlen($route[0] > 1)) {
+                if (substr($route[0], -1) == "/") {
+                    $route[0] = rtrim($route[0], '/');
+                }
             }
+
 
         }
 

@@ -48,7 +48,7 @@ class Request
 
     public function all()
     {
-        return $this->getRequestDataByMethod($this->methodRequest);
+        return $this->getRequestDataByMethod($this->methodRequest) ?? [];
     }
 
     private function json()
