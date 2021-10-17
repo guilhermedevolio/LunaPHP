@@ -1,0 +1,15 @@
+{
+    "name": "gui/mvc",
+    "autoload": {
+        "psr-4": {
+            "Gui\\Mvc\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Guilherme5889",
+            "email": "guinogaroto@gmail.com"
+        }
+    ],
+    "require": {}
+}
