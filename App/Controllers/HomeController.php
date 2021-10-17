@@ -12,6 +12,11 @@ class HomeController extends Controller
        var_dump($getData );
     }
 
+    public function Teste($nome)
+    {
+        echo $nome;
+    }
+
     public function Post()
     {
         $postData = $this->request()->post()->all();
