@@ -8,12 +8,14 @@ class HomeController extends Controller
 {
     public function Index()
     {
-       echo $this->request()->method();
+       $getData = $this->request()->get()->all();
+       var_dump($getData );
     }
 
     public function Post()
     {
-        echo "PostRequest";
+        $postData = $this->request()->post()->all();
+        var_dump($postData );
     }
 
     public function Put()
