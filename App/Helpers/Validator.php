@@ -62,12 +62,7 @@ class Validator
         $newRules = array();
 
         if (strpos($rules, $this->separator)) {
-            $r = explode($this->separator, $rules);
-            foreach ($r as $rr) {
-                $newRules[] = $rr;
-            }
-
-            return $newRules;
+            return explode($this->separator, $rules);
         }
 
         return (array)$rules;
