@@ -6,8 +6,12 @@ use Gui\Mvc\Core\Http\Http;
 
 abstract class Controller extends Http
 {
-    public function view(string $view, array $data = [])
+    public View $view;
+
+    public function __construct()
     {
-        echo $view;
+        $this->view = (new View());
     }
+
+
 }

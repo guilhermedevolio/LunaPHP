@@ -8,8 +8,8 @@ class HomeController extends Controller
 {
     public function Index()
     {
-       $getData = $this->request()->get()->all();
-       var_dump($getData );
+        $this->view->setPageTitle('Teste');
+        $this->view->render('home/index');
     }
 
     public function Teste($nome)
@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function Post()
     {
         $postData = $this->request()->post()->all();
-        var_dump($postData );
+        var_dump($postData);
     }
 
     public function Put()
