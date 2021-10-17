@@ -46,8 +46,6 @@ class Router extends Http
         $urlArray = $this->getParsedUrl();
 
         foreach ($routes as $route) {
-
-
             $routeArray = explode('/', $route[0]);
 
             for ($i = 0; $i < count($routeArray); $i++) {
