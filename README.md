@@ -7,3 +7,13 @@ The idea is to use this framewok to learn when building it and encourage friends
 <ul>
 <li><a href="https://docs.guzzlephp.org/en/stable/">Guzzle HTTP</a></li>
 </ul>
+<h2>How to install:</h2>
+<ul>
+  <li> Type in your terminal:  
+  <li>git clone https://github.com/guilhermedevolio/LunaPHP.git - For clone this repo</li>
+  <li>cd LunaPHP</li>
+  <li>composer-install</li>
+  <li> Change your apache vhosts to LunaPHP/public </li>
+  <li> Configure this project in LunaPHP/Config/config.php and more files inside this folder </li>
+</ul>
+<h2>Ready! Your project is already running</h2>
