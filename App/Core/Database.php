@@ -10,7 +10,7 @@ class Database
     {
 
         $host = 'localhost';
-        $db = 'portal_uzenir';
+        $db = 'LunaPHP';
         $password = '';
         $user = 'root';
 
