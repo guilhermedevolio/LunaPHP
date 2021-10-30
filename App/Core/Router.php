@@ -28,10 +28,7 @@ class Router extends Http
             $group .= "/";
         }
 
-
         return $this->group = $group;
-
-
     }
 
     public function get($url, $controller, $middleware = null)
@@ -101,7 +98,6 @@ class Router extends Http
                 $route[0] = $this->group . $route[0];
             }
 
-
             if(strlen($route[0] > 1)) {
                 if (substr($route[0], -1) == "/") {
                     $route[0] = rtrim($route[0], '/');
@@ -140,7 +136,6 @@ class Router extends Http
         if (!empty($middlewares)) {
             $this->loadMiddlewares($middlewares);
         }
-
 
         call_user_func_array([$controller, $method], $params);
     }

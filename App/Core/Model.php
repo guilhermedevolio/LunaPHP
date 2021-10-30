@@ -2,8 +2,6 @@
 
 namespace Gui\Mvc\Core;
 
-use PDO;
-
 abstract class Model
 {
     public string $query;

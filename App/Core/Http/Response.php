@@ -11,26 +11,18 @@ class Response
         $this->data = $data;
     }
 
-    /**
-     * @param int $status
-     * @return $this
-     */
-    public function status(int $status): Response
+    public function status(int $status): Response 
     {
         http_response_code($status);
         $this->status = $status;
 
         return $this;
+
     }
 
-    /**
-     * @param array $data
-     * @return bool
-     */
-    public function json(array $data = []): bool
+    public function json(array $data = [])
     {
         header('Content-type: application/json');
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
-        return true;
     }
 }
