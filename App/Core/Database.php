@@ -2,6 +2,8 @@
 
 namespace Gui\Mvc\Core;
 
+use PDO;
+
 class Database
 {
     public static $pdo;
@@ -10,7 +12,7 @@ class Database
     {
 
         $host = 'localhost';
-        $db = 'LunaPHP';
+        $db = 'lunacommerce';
         $password = '';
         $user = 'root';
 

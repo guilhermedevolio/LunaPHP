@@ -21,6 +21,8 @@ class View
         if (file_exists($file)) {
             require_once $file;
         }
+
+        return true;
     }
 
     public function load(string $component = null)
