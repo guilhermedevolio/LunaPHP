@@ -18,8 +18,7 @@ class Database
             try {
                 self::$pdo = new \PDO("mysql:host=$host;dbname=$db", $user, $password, array(PDO::ATTR_PERSISTENT => true));
             } catch (\Exception $e) {
-                echo "Falha ao estabelecer conexão com o banco de dados";
-                die();
+                exit(json_encode(['code' => '500', 'message' => 'Failed to connect to database']));
             }
 
         }
