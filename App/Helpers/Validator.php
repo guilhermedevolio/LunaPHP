@@ -30,7 +30,6 @@ class Validator
 
                 if ($rule_ == "required" && (!isset($data[$key]) || empty($data[$key]))) {
                     $this->errors[$key][] = $this->validation_messages[$rule_]['error_message'];
-                    break;
                 } else {
                     if(!empty($data[$key])) {
                         $call_validate = $this->call($rule_, $data[$key]);
