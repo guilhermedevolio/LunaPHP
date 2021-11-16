@@ -31,11 +31,9 @@ class Validator
                 if ($rule_ == "required" && (!isset($data[$key]) || empty($data[$key]))) {
                     $this->errors[$key][] = $this->validation_messages[$rule_]['error_message'];
                 } else {
-                    if(!empty($data[$key])) {
-                        $call_validate = $this->call($rule_, $data[$key]);
-                        if (!$call_validate) {
-                            $this->errors[$key][] = $this->validation_messages[$rule_]['error_message'];
-                        }
+                    $call_validate = $this->call($rule_, $data[$key]);
+                    if (!$call_validate) {
+                        $this->errors[$key][] = $this->validation_messages[$rule_]['error_message'];
                     }
                 }
             }
@@ -46,14 +44,14 @@ class Validator
 
     private function call(string $validation, $value)
     {
-        if (method_exists($this->validations, $validation)) {
-            return $this->validations->$validation($value);
-        } else {
-            die("Validation $validation not found");
+        if (!method_exists($this->validations, $validation)) {
+            throw new Exception('Validation $validation not found');
         }
+        
+        return $this->validations->$validation($value);
     }
 
-    public function getParsedRules(string $rules)
+    public function getParsedRules(string $rules): array
     {
         $newRules = array();
 
@@ -61,7 +59,7 @@ class Validator
             return explode($this->separator, $rules);
         }
 
-        return (array)$rules;
+        return (array) $rules;
     }
 
 }
