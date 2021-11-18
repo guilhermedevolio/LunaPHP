@@ -152,7 +152,7 @@ abstract class Model
         }
     }
 
-    public function protected()
+    public function protected(): ?array
     {
         $protected = (array)$this->protected;
 
@@ -173,7 +173,7 @@ abstract class Model
         return $this->data;
     }
 
-    public function fillabled(array $data)
+    public function fillabled(array $data): ?array
     {
         $dataFillabled = [];
 
